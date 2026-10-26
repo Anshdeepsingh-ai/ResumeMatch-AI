@@ -72,7 +72,7 @@ flowchart TD
 | `config/settings.py` | Configuration | Centralized settings, path resolution, environment variables (`.env`). |
 | `src/parsers/` | Ingestion | Multi-format extraction for resume and job description documents (PDF, DOCX, TXT). |
 | `src/preprocessing/` | Data Cleaning | Text normalization, stopword filtering, section identification (Experience, Education, Skills). |
-| `src/nlp/` | Deep Learning NLP | Transformer encoder models, dense semantic sentence/document embedding generation. |
+| `src/nlp/` | NLP Feature Extraction | Technical tokenization (C++, C#, .NET, Node.js), sentence segmentation, candidate keyword/phrase mining, and configurable skill extraction. |
 | `src/matching/` | Matching Engine | Cosine vector similarity calculation, skill taxonomy intersection, and weighted hybrid scoring. |
 | `src/analytics/` | Analytics & Reports | Top-K candidate sorting, skill gap breakdown, matching metric summaries, and CSV report export. |
 | `src/utils/` | Utilities | Structured console and rotating file logger (`logger.py`). |
@@ -142,9 +142,12 @@ timeline
    - Cleaning extraction artifacts (end-of-line hyphen repair, bullet point standardization, divider removal).
    - Strict preservation of technical terms, programming languages, and punctuation (C++, C#, .NET, Node.js, version numbers).
    - Non-destructive processing: preserves case, avoids stopword removal or stemming to retain full semantic context.
-4. **Day 4 — Deep Learning NLP Embeddings:**
-   - Loading pre-trained Transformer encoders (e.g. `all-MiniLM-L6-v2` or BERT).
-   - Dense vector pooling strategies and embedding cache management.
+4. **Day 4 — NLP Feature Extraction & Technical Profiling (Completed):**
+   - Specialized technical tokenizer preserving C++, C#, .NET, Node.js, version numbers, and compound terms.
+   - Robust sentence and bullet-point segmentation protecting abbreviations (Ph.D., Dr., e.g.).
+   - Candidate keyword and keyphrase (2-gram, 3-gram) mining with stopword filtering.
+   - Configurable skill taxonomy extractor (`src/nlp/skills.py`) distinguishing exact matches from alias matches.
+   - Structured, serializable `NLPFeatures` payload containing comprehensive document statistics.
 5. **Day 5 — Semantic & Skill Matching:**
    - Cosine similarity computation between job embeddings and candidate embeddings.
    - Explicit skill extraction and match ratio weighting.
