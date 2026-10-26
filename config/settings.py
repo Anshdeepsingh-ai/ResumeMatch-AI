@@ -64,6 +64,14 @@ class Settings:
     STREAMLIT_PORT: int = int(os.getenv("STREAMLIT_SERVER_PORT", "8501"))
     STREAMLIT_HOST: str = os.getenv("STREAMLIT_SERVER_ADDRESS", "localhost")
 
+    # Document Parsing Configuration (Day 2 Milestone)
+    MAX_FILE_SIZE_MB: int = int(os.getenv("MAX_FILE_SIZE_MB", "10"))
+    SUPPORTED_EXTENSIONS: tuple = (".pdf", ".docx", ".txt")
+
+    @property
+    def MAX_FILE_SIZE_BYTES(self) -> int:
+        return self.MAX_FILE_SIZE_MB * 1024 * 1024
+
     # Planned Roadmap Features (Milestones for Days 1 to 7)
     PLANNED_FEATURES: List[Dict[str, str]] = field(default_factory=lambda: [
         {
@@ -75,8 +83,8 @@ class Settings:
         {
             "day": "Day 2",
             "name": "Document Extraction (PDF & DOCX)",
-            "status": "Planned",
-            "description": "Robust extraction of raw text and metadata from PDF and DOCX resume files."
+            "status": "Completed",
+            "description": "Robust extraction of raw text and metadata from PDF, DOCX, and TXT resume files."
         },
         {
             "day": "Day 3",
