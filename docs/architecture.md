@@ -137,9 +137,11 @@ timeline
    - Multi-format text extraction (PyMuPDF / fitz, python-docx, and UTF-8 plain text).
    - Strict format validation, corruption handling, and configurable file size limits.
    - Non-PII metadata tracking (character count, word count, page count, paragraph count).
-3. **Day 3 — Text Preprocessing & Cleaning:**
-   - Case normalization, regex cleaning, email/phone scrubbing.
-   - Section segmentation: isolating Skills, Experience, Education, and Certifications.
+3. **Day 3 — Text Preprocessing & Normalization (Completed):**
+   - Deterministic normalization pipeline (`src/preprocessing/`): Unicode NFKC, line endings, and control characters.
+   - Cleaning extraction artifacts (end-of-line hyphen repair, bullet point standardization, divider removal).
+   - Strict preservation of technical terms, programming languages, and punctuation (C++, C#, .NET, Node.js, version numbers).
+   - Non-destructive processing: preserves case, avoids stopword removal or stemming to retain full semantic context.
 4. **Day 4 — Deep Learning NLP Embeddings:**
    - Loading pre-trained Transformer encoders (e.g. `all-MiniLM-L6-v2` or BERT).
    - Dense vector pooling strategies and embedding cache management.
