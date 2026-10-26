@@ -76,6 +76,12 @@ class Settings:
     DEFAULT_TOP_KEYWORDS: int = int(os.getenv("DEFAULT_TOP_KEYWORDS", "20"))
     DEFAULT_TOP_KEYPHRASES: int = int(os.getenv("DEFAULT_TOP_KEYPHRASES", "15"))
 
+    # Semantic Matching Engine Configuration (Day 5 Milestone)
+    MATCHING_METHOD: str = os.getenv("MATCHING_METHOD", "auto")
+    SENTENCE_TRANSFORMER_MODEL: str = os.getenv("SENTENCE_TRANSFORMER_MODEL", "all-MiniLM-L6-v2")
+    SEMANTIC_WEIGHT: float = float(os.getenv("SEMANTIC_WEIGHT", "0.6"))
+    SKILL_WEIGHT: float = float(os.getenv("SKILL_WEIGHT", "0.4"))
+
     # Planned Roadmap Features (Milestones for Days 1 to 7)
     PLANNED_FEATURES: List[Dict[str, str]] = field(default_factory=lambda: [
         {
@@ -105,8 +111,8 @@ class Settings:
         {
             "day": "Day 5",
             "name": "Semantic Matching & Skill Extraction",
-            "status": "Planned",
-            "description": "Cosine similarity scoring, skill taxonomy alignment, and weighted hybrid match formulas."
+            "status": "Completed",
+            "description": "Cosine similarity scoring, deep contextual embeddings with TF-IDF fallback, skill taxonomy alignment, and weighted hybrid match formulas."
         },
         {
             "day": "Day 6",
