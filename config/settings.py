@@ -72,6 +72,10 @@ class Settings:
     def MAX_FILE_SIZE_BYTES(self) -> int:
         return self.MAX_FILE_SIZE_MB * 1024 * 1024
 
+    # NLP Feature Extraction Configuration (Day 4 Milestone)
+    DEFAULT_TOP_KEYWORDS: int = int(os.getenv("DEFAULT_TOP_KEYWORDS", "20"))
+    DEFAULT_TOP_KEYPHRASES: int = int(os.getenv("DEFAULT_TOP_KEYPHRASES", "15"))
+
     # Planned Roadmap Features (Milestones for Days 1 to 7)
     PLANNED_FEATURES: List[Dict[str, str]] = field(default_factory=lambda: [
         {
@@ -94,9 +98,9 @@ class Settings:
         },
         {
             "day": "Day 4",
-            "name": "Deep Learning NLP & Embeddings",
-            "status": "Planned",
-            "description": "Dense contextual representations using Sentence Transformers and deep contextual NLP models."
+            "name": "NLP Feature Extraction & Technical Profiling",
+            "status": "Completed",
+            "description": "Technical tokenization preserving C++/C#/.NET/Node.js, sentence segmentation, candidate keyword/phrase mining, and configurable skill extraction."
         },
         {
             "day": "Day 5",
