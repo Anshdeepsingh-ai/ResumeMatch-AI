@@ -218,3 +218,70 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ==============================================================================
+# ResumeMatch AI Specific Ignores
+# ==============================================================================
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment files and credentials
+.env
+.env*.local
+*.pem
+*.key
+
+# Application runtime logs
+logs/*
+!logs/.gitkeep
+*.log
+
+# Real candidate resumes & user uploaded documents (Privacy & Compliance)
+data/resumes/*
+!data/resumes/.gitkeep
+data/uploads/*
+!data/uploads/.gitkeep
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Exclude candidate documents by default to prevent accidental leaks of personal data
+*.pdf
+*.docx
+*.doc
+
+# Allow legitimate project documentation
+!docs/**/*.pdf
+!docs/**/*.docx
+!docs/**/*.doc
+!docs/*.pdf
+!docs/*.docx
+!docs/*.doc
+
+# Allow permitted synthetic sample fixtures and test datasets
+!data/sample/**
+!tests/fixtures/**
+
+# Preserve directory tracking markers
+!data/sample/.gitkeep
+!logs/.gitkeep
+
+# Machine Learning & Deep Learning model artifacts
+models/*
+!models/.gitkeep
+artifacts/*
+!artifacts/.gitkeep
+checkpoints/
+embeddings/
+*.pt
+*.pth
+*.bin
+*.onnx
+*.safetensors
+*.pkl
+*.joblib

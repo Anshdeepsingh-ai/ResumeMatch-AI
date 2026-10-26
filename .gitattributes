@@ -1,0 +1,55 @@
+# ==============================================================================
+# ResumeMatch AI - Git Attributes (Line Ending & Binary Configuration)
+# ==============================================================================
+
+# Auto-detect text files and normalize line endings to LF in Git repository
+* text=auto
+
+# Source code and configuration files
+*.py text eol=lf
+*.md text
+*.txt text
+*.toml text
+*.yaml text
+*.yml text
+*.json text
+*.csv text
+*.ini text
+*.cfg text
+*.example text
+*.gitkeep text
+*.gitignore text
+*.gitattributes text
+
+# Shell scripts must strictly preserve LF
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Windows batch and PowerShell scripts
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files - prevent Git from modifying line endings
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.docx binary
+*.doc binary
+*.pt binary
+*.pth binary
+*.bin binary
+*.onnx binary
+*.safetensors binary
+*.pkl binary
+*.joblib binary
+*.pyc binary
+*.pyd binary
+*.so binary
+*.dll binary
+*.exe binary
+*.zip binary
+*.tar.gz binary
