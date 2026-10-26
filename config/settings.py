@@ -88,9 +88,9 @@ class Settings:
         },
         {
             "day": "Day 3",
-            "name": "Text Preprocessing & Cleaning",
-            "status": "Planned",
-            "description": "Tokenization, stopword normalization, section segmenting, and structured entity parsing."
+            "name": "Text Preprocessing & Normalization",
+            "status": "Completed",
+            "description": "Unicode NFKC normalization, line ending standardization, artifact cleaning, and whitespace control."
         },
         {
             "day": "Day 4",
