@@ -73,7 +73,7 @@ flowchart TD
 | `src/parsers/` | Ingestion | Multi-format extraction for resume and job description documents (PDF, DOCX, TXT). |
 | `src/preprocessing/` | Data Cleaning | Text normalization, stopword filtering, section identification (Experience, Education, Skills). |
 | `src/nlp/` | NLP Feature Extraction | Technical tokenization (C++, C#, .NET, Node.js), sentence segmentation, candidate keyword/phrase mining, and configurable skill extraction. |
-| `src/matching/` | Matching Engine | Cosine vector similarity calculation, skill taxonomy intersection, and weighted hybrid scoring. |
+| `src/matching/` | Matching Engine | Pluggable similarity engine (Sentence-BERT & pure-NumPy TF-IDF lexical fallback), cosine metric calculation, skill taxonomy alignment, and weighted hybrid scoring. |
 | `src/analytics/` | Analytics & Reports | Top-K candidate sorting, skill gap breakdown, matching metric summaries, and CSV report export. |
 | `src/utils/` | Utilities | Structured console and rotating file logger (`logger.py`). |
 | `ui/` | Frontend Components | Modular Streamlit landing page, candidate ranking dashboards, and visualization components. |
@@ -148,9 +148,39 @@ timeline
    - Candidate keyword and keyphrase (2-gram, 3-gram) mining with stopword filtering.
    - Configurable skill taxonomy extractor (`src/nlp/skills.py`) distinguishing exact matches from alias matches.
    - Structured, serializable `NLPFeatures` payload containing comprehensive document statistics.
-5. **Day 5 — Semantic & Skill Matching:**
-   - Cosine similarity computation between job embeddings and candidate embeddings.
-   - Explicit skill extraction and match ratio weighting.
+5. **Day 5 — Semantic & Skill Matching Engine (Completed):**
+   - Pluggable similarity architecture (`BaseSimilarityEngine`): deep semantic embeddings via Sentence-BERT / Transformer models (`SentenceTransformerEngine`) and lightweight, pure-NumPy lexical vector space fallback (`TFIDFSimilarityEngine`).
+   - Pure-NumPy TF-IDF vectorizer preserving technical expressions (C++, C#, .NET, Node.js, version numbers) with sublinear TF scaling and smooth IDF.
+   - Cosine vector similarity calculation with dimension validation, numerical clipping, and 0.0–100.0 percentage mapping.
+   - Automated skill taxonomy alignment integrating `src.nlp` feature extraction: determines matched skills, missing skills, and skill coverage ratio.
+   - Documented composite scoring formula combining semantic similarity and skill coverage:
+     $$\text{overall\_score} = (\text{semantic\_weight} \times \text{similarity\_score}) + (\text{skill\_weight} \times \text{skill\_coverage\_score})$$
+     (default weights: 0.6 semantic, 0.4 skill; configurable via environment).
+   - Evidence-based, non-judgmental explanation generation ensuring objective assessment without biased or exclusionary assertions.
+   - Complete type hints, structured `MatchResult` schema, and offline-executable test suite.
+
+### 5.1 Score Interpretation & Ethical AI Disclaimers
+
+The matching engine generates two distinct primary scores and one composite heuristic:
+
+1. **Semantic Similarity Score (`similarity_score`):**
+   - **Scale:** Continuous value on a 0.0–100.0 display scale, mapped via $\max(0.0, \min(100.0, \text{cosine\_similarity} \times 100.0))$.
+   - **Nature:** A scaled vector similarity metric. **It is NOT a probability, statistical confidence score, or calibrated percentage of candidate job suitability.**
+   - **Model Distinctions:**
+     - **Sentence-Transformers (Deep Neural Embeddings):** Measures contextual and conceptual affinity between documents in dense embedding space (e.g., connecting synonymous technical phrasing).
+     - **TF-IDF Lexical Fallback:** Measures normalized term frequency-inverse document frequency overlap in sparse vector space. Reflects shared vocabulary rather than semantic comprehension.
+
+2. **Skill Coverage Score (`skill_coverage_score`):**
+   - **Scale:** Percentage on a 0.0–100.0 scale, calculated as $\frac{|\text{Matched Skills}|}{|\text{Target JD Skills}|} \times 100.0$ (or 100.0 if the job description specifies no canonical taxonomy skills).
+   - **Nature:** An exact/alias vocabulary match ratio across predefined domain categories.
+
+3. **Composite Overall Score (`overall_score`):**
+   - **Formula:**
+     $$\text{overall\_score} = (\text{semantic\_weight} \times \text{similarity\_score}) + (\text{skill\_weight} \times \text{skill\_coverage\_score})$$
+     (Default weights: $\text{semantic\_weight} = 0.6$, $\text{skill\_weight} = 0.4$, configurable via `settings.py` / `.env`).
+   - **Heuristic Characterization:** An exploratory ranking heuristic intended for recruiter triage. **It is NOT an automated employment decision tool, legal hiring recommendation, or psychometrically validated candidate grade.**
+   - **Ethical Safeguards:** Explanations emphasize that absent keywords do not imply incompetence, as qualifications may be demonstrated under alternative nomenclature or within unlisted project achievements.
+
 6. **Day 6 — Candidate Ranking & Analytics:**
    - Multi-candidate sorting, percentile scoring, and skill gap visualization.
    - Exporting ranking results and skill matrices to downloadable CSV.
