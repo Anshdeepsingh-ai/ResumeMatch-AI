@@ -133,9 +133,10 @@ timeline
    - Structured logging to console and `logs/app.log`.
    - Streamlit modular landing page detailing project motivation and planned features.
    - Pytest smoke test suite ensuring 100% import pass rate.
-2. **Day 2 — Document Parsing:**
-   - Multi-format text extraction (`pdfplumber` / `pypdf`, `python-docx`).
-   - Metadata isolation (filename, length, parse integrity).
+2. **Day 2 — Document Parsing (Completed):**
+   - Multi-format text extraction (PyMuPDF / fitz, python-docx, and UTF-8 plain text).
+   - Strict format validation, corruption handling, and configurable file size limits.
+   - Non-PII metadata tracking (character count, word count, page count, paragraph count).
 3. **Day 3 — Text Preprocessing & Cleaning:**
    - Case normalization, regex cleaning, email/phone scrubbing.
    - Section segmentation: isolating Skills, Experience, Education, and Certifications.
