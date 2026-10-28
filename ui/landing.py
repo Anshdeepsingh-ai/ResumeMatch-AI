@@ -109,10 +109,11 @@ def render_sidebar() -> None:
         st.info("💡 **Day 1 Goal Completed**: Centralized architecture, configuration, logging, testing, and UI foundation.")
 
 
-def render_landing_page() -> None:
+def render_landing_page(include_sidebar: bool = True) -> None:
     """Render the complete landing page for ResumeMatch AI."""
     apply_custom_styles()
-    render_sidebar()
+    if include_sidebar:
+        render_sidebar()
 
     # Hero / Header Section
     st.markdown('<div class="main-header">🎯 ResumeMatch AI</div>', unsafe_allow_html=True)

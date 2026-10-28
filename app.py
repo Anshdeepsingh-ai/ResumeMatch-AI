@@ -8,7 +8,8 @@ import streamlit as st
 
 from config.settings import settings
 from src.utils.logger import get_logger
-from ui.landing import render_landing_page
+from ui.dashboard import render_ranking_dashboard
+from ui.landing import apply_custom_styles, render_landing_page, render_sidebar
 
 # Initialize logger
 logger = get_logger("app")
@@ -26,9 +27,22 @@ def main() -> None:
         initial_sidebar_state="expanded",
     )
 
-    # Render modular landing page
-    render_landing_page()
-    logger.info("Landing page successfully rendered.")
+    apply_custom_styles()
+    render_sidebar()
+
+    # Tabbed navigation between Overview and Candidate Ranking & Analytics
+    tab_overview, tab_ranking = st.tabs([
+        "💡 Project Overview",
+        "🏆 Candidate Ranking & Analytics",
+    ])
+
+    with tab_overview:
+        render_landing_page(include_sidebar=False)
+
+    with tab_ranking:
+        render_ranking_dashboard()
+
+    logger.info("Application view successfully rendered.")
 
 
 if __name__ == "__main__":

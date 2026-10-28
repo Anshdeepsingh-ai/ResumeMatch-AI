@@ -82,6 +82,10 @@ class Settings:
     SEMANTIC_WEIGHT: float = float(os.getenv("SEMANTIC_WEIGHT", "0.6"))
     SKILL_WEIGHT: float = float(os.getenv("SKILL_WEIGHT", "0.4"))
 
+    # Candidate Ranking & Analytics Configuration (Day 6 Milestone)
+    DEFAULT_TOP_K: int = int(os.getenv("DEFAULT_TOP_K", "10"))
+    CSV_EXPORT_ENCODING: str = os.getenv("CSV_EXPORT_ENCODING", "utf-8-sig")
+
     # Planned Roadmap Features (Milestones for Days 1 to 7)
     PLANNED_FEATURES: List[Dict[str, str]] = field(default_factory=lambda: [
         {
@@ -117,8 +121,8 @@ class Settings:
         {
             "day": "Day 6",
             "name": "Candidate Ranking & Analytics",
-            "status": "Planned",
-            "description": "Top-K candidate sorting, skill gap visualization, analytics, and CSV report export."
+            "status": "Completed",
+            "description": "Multi-candidate parsing, semantic scoring, deterministic tie-breaking, aggregate statistical distributions, skill gap analysis, and RFC 4180 CSV report export."
         },
         {
             "day": "Day 7",

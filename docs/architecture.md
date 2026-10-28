@@ -74,7 +74,7 @@ flowchart TD
 | `src/preprocessing/` | Data Cleaning | Text normalization, stopword filtering, section identification (Experience, Education, Skills). |
 | `src/nlp/` | NLP Feature Extraction | Technical tokenization (C++, C#, .NET, Node.js), sentence segmentation, candidate keyword/phrase mining, and configurable skill extraction. |
 | `src/matching/` | Matching Engine | Pluggable similarity engine (Sentence-BERT & pure-NumPy TF-IDF lexical fallback), cosine metric calculation, skill taxonomy alignment, and weighted hybrid scoring. |
-| `src/analytics/` | Analytics & Reports | Top-K candidate sorting, skill gap breakdown, matching metric summaries, and CSV report export. |
+| `src/analytics/` | Analytics & Ranking | Multi-candidate batch evaluation, deterministic tie-breaking, aggregate statistical distributions, skill gap analysis, and RFC 4180 CSV export. |
 | `src/utils/` | Utilities | Structured console and rotating file logger (`logger.py`). |
 | `ui/` | Frontend Components | Modular Streamlit landing page, candidate ranking dashboards, and visualization components. |
 | `tests/` | Quality Assurance | Pytest test suite covering smoke tests, configuration validation, and unit tests. |
@@ -181,9 +181,14 @@ The matching engine generates two distinct primary scores and one composite heur
    - **Heuristic Characterization:** An exploratory ranking heuristic intended for recruiter triage. **It is NOT an automated employment decision tool, legal hiring recommendation, or psychometrically validated candidate grade.**
    - **Ethical Safeguards:** Explanations emphasize that absent keywords do not imply incompetence, as qualifications may be demonstrated under alternative nomenclature or within unlisted project achievements.
 
-6. **Day 6 — Candidate Ranking & Analytics:**
-   - Multi-candidate sorting, percentile scoring, and skill gap visualization.
-   - Exporting ranking results and skill matrices to downloadable CSV.
+6. **Day 6 — Candidate Ranking & Analytics (Completed):**
+   - Multi-candidate batch processing service (`CandidateRankingService`): parses PDF/DOCX/TXT resumes, normalizes text, executes semantic matching, and computes aggregate analytics.
+   - Partial failure isolation: individual invalid, empty, or unreadable files produce clear error diagnostics without failing the overall batch.
+   - Deterministic tie-breaking rules:
+     $$\text{overall\_score} \downarrow \implies \text{similarity\_score} \downarrow \implies \text{skill\_coverage\_score} \downarrow \implies \text{filename} \uparrow \implies \text{candidate\_id} \uparrow$$
+   - Batch analytics engine (`calculate_batch_analytics`): computes submitted/processed/failed counts, mean, median, min, max, standard deviation, score distribution buckets (0-20, 21-40, 41-60, 61-80, 81-100), and top matched vs. missing skills.
+   - Standardized CSV export (`CSVExportService`): produces RFC 4180 compliant CSV files encoded in UTF-8 with BOM (`utf-8-sig`) for Excel cross-platform compatibility, safely handling quotes and Unicode while strictly omitting full resume text.
+   - Modular Streamlit dashboard (`ui/dashboard.py`): interactive table, score distribution bar charts, skill gap summaries, candidate inspection, and 1-click CSV download.
 7. **Day 7 — System Integration & Polish:**
    - End-to-end testing, error handling, batch upload evaluation, and course demonstration readiness.
 
